@@ -17,7 +17,7 @@ import ws3dproxy.model.Thing;
 
 public class Forage extends Codelet {
     
-        private MemoryObject knownMO;
+        private MemoryObject knownGreenCrystalsMO;
         private List<Thing> known;
         private MemoryObject legsMO;
 
@@ -31,7 +31,7 @@ public class Forage extends Codelet {
 
 	@Override
 	public void proc() {
-            known = (List<Thing>) knownMO.getI();
+            known = (List<Thing>) knownGreenCrystalsMO.getI();
             if (known.size() == 0) {
 		JSONObject message=new JSONObject();
 			try {
@@ -48,7 +48,7 @@ public class Forage extends Codelet {
 
 	@Override
 	public void accessMemoryObjects() {
-            knownMO = this.getInput("KNOWN_APPLES");
+            knownGreenCrystalsMO = this.getInput("KNOWN_GCRYSTALS");
             legsMO=this.getOutput("LEGS");
 
 		// TODO Auto-generated method stub
