@@ -58,7 +58,8 @@ public class LegsActionCodelet extends Codelet{
                                                       x = r.nextInt(600);
                                                       y = r.nextInt(800);
                                                       if (!comm.equals(previousLegsAction)) System.out.println("Sending Forage command to agent:****** ("+x+","+y+") **********");	
-                                                      c.moveto(1,x,y);
+                                                      //c.moveto(1,x,y);
+                                                      c.rotate(5);
                                                 } catch (Exception e) {
                                                     e.printStackTrace();
                                                 }

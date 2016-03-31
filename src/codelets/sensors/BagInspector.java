@@ -37,8 +37,8 @@ public class BagInspector extends Codelet {
         CreatureInnerSense cis;
         private Double bag;
     
-        public BagInspector (){
-            
+        public BagInspector (Creature cc){
+           c = cc;            
         }
         
         @Override
@@ -50,25 +50,28 @@ public class BagInspector extends Codelet {
         
         @Override
         public void proc(){
-            int apple;
-            //int red_cristal;
-            int green_cristal;
             
+            Bag current = c.getBag();
+            bagMO.setI(current);
+//            c.getSackContent()
+//            apple = c..getNumberPFood();
+//            green_crystal= getNumberCrystalPerType(colorGREEN);
+//            
+            /*deve ver qual os cristais ele possui a fim de saber qual leaflet pode ser cumprido
+            não considerar os leaflets que possuem cristais vermelhos
             
-            apple = getNumberPFood();
-            
-            
-            
-            synchronized(bagMO){         
-                Creature cc = (Creature) bagMO.getI();
-                Bag bg = cc.updateBag();
-                
-                
-            }
+            */
+                    
+//            synchronized(bagMO){         
+//                Creature cc = (Creature) bagMO.getI();
+//                Bag bg = cc.updateBag();
+//                
+//                
+//            }
         
         } //end proc
         @Override
         public void calculateActivation() {
         
         }
-}
+}//end class

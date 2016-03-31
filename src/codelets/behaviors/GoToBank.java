@@ -30,10 +30,16 @@ import org.json.JSONObject;
  *
  * @author barbara
  */
+
+/*deve ver qual os cristais ele possui a fim de saber qual leaflet pode ser cumprido
+            não considerar os leaflets que possuem cristais vermelhos
+            
+*/
 public class GoToBank extends Codelet {
         private MemoryObject bagMO;
 	private MemoryObject selfInfoMO;
 	private MemoryObject legsMO;
+         private MemoryObject innerSenseMO;
 	private int creatureBasicSpeed;
 	private double reachDistance;
 
@@ -56,9 +62,7 @@ public class GoToBank extends Codelet {
                 String selfInfo= selfInfoMO.getInfo();
                 CreatureInnerSense cis = (CreatureInnerSense) selfInfoMO.getI();
                 //System.out.println("GoToClosestApple: "+appleInfo+" "+selfInfo);
-                private MemoryObject innerSenseMO;
-                CreatureInnerSense cis;
-        
+                       
                 double bankX=0;
 		double bankY=0;
 		

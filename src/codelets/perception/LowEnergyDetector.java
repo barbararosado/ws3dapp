@@ -39,7 +39,8 @@ public class LowEnergyDetector extends Codelet {
         CreatureInnerSense cis;
         private Double hunger;
     
-        public LowEnergyDetector (){
+        public LowEnergyDetector (Creature cc){
+            c = cc;
         }
         
         @Override

@@ -82,7 +82,7 @@ public class AgentMind extends Mind {
                 knownGreenCrystalsMO=createMemoryObject("KNOWN_GCRYSTALS", knownGreenCrystals);
                 Thing closestGreenCrystal = null;
                 closestGreenCrystalMO=createMemoryObject("CLOSEST_GCRYSTAL", closestGreenCrystal);
-                bagMO=createMemoryObject("BAG", env.c);
+                bagMO=createMemoryObject("BAG");
                 
                 
                 // Create and Populate MindViewer
@@ -109,8 +109,7 @@ public class AgentMind extends Mind {
 		Codelet innerSense=new InnerSense(env.c);
 		innerSense.addOutput(innerSenseMO);
                 insertCodelet(innerSense); //A sensor for the inner state of the creature
-                
-                Codelet bag=new BagInspector();
+                Codelet bag=new BagInspector(env.c);
 		bag.addOutput(bagMO);
                 insertCodelet(bag); //Creates a bag sensor
                 
@@ -135,19 +134,20 @@ public class AgentMind extends Mind {
 		closestAppleDetector.addOutput(closestAppleMO);
                 insertCodelet(closestAppleDetector);
                 
-                Codelet lowEnergyDetector=new LowEnergyDetector();
+                Codelet lowEnergyDetector=new LowEnergyDetector(env.c);
                 lowEnergyDetector.addOutput(hungerMO);
                 lowEnergyDetector.addInput(innerSenseMO);
                 insertCodelet(lowEnergyDetector);
                 
                 Codelet cd = new CrystalDetector();
-                ad.addInput(visionMO);
-                ad.addOutput(knownGreenCrystalsMO);
+                cd.addInput(visionMO);
+                cd.addOutput(knownGreenCrystalsMO);
                 insertCodelet(cd);
                 
                 Codelet closestRedCristalDetector = new ClosestRedCrystalDetector();
 		closestRedCristalDetector.addInput(innerSenseMO); //por que?
-		closestRedCristalDetector.addOutput(fearMO);
+		closestRedCristalDetector.addInput(visionMO);
+                closestRedCristalDetector.addOutput(fearMO);
                 insertCodelet(closestRedCristalDetector);
                 
                 Codelet closestGreenCristalDetector = new ClosestGreenCrystalDetector();
@@ -173,6 +173,7 @@ public class AgentMind extends Mind {
                 
                 Codelet forage=new Forage();
 		forage.addInput(knownApplesMO);
+                forage.addInput(knownGreenCrystalsMO);
                 forage.addOutput(legsMO);
                 insertCodelet(forage);
                 
@@ -184,12 +185,14 @@ public class AgentMind extends Mind {
                 insertCodelet(goToClosestCrystal);
                 
                 Codelet escape= new Escape();
+                escape.addInput(knownApplesMO);
                 escape.addInput(fearMO);
                 escape.addOutput(legsMO);
                 insertCodelet(escape);
                 
-                Codelet goToBank=new GoToBank(creatureBasicSpeed);
+                Codelet goToBank=new GoToBank(creatureBasicSpeed,reachDistance);
                 goToBank.addInput(bagMO);
+                goToBank.addInput(innerSenseMO);
                 goToBank.addOutput(legsMO);
                 insertCodelet(goToBank);
                 

@@ -46,7 +46,8 @@ public class ClosestRedCrystalDetector extends Codelet {
 		this.visionMO=this.getInput("VISION");
                 }
                 this.innerSenseMO=this.getInput("INNER");
-		this.fearMO=this.getOutput("FEAR");
+                cis = (CreatureInnerSense) innerSenseMO.getI();
+                this.fearMO=this.getOutput("FEAR");
 	}
 	@Override
 	public void proc() {

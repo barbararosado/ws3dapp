@@ -14,7 +14,7 @@ import ws3dproxy.model.WorldPoint;
  * @author rgudwin
  */
 public class CreatureInnerSense {
-    public WorldPoint position;
+    public WorldPoint position = new WorldPoint();
     public double pitch;
     public double fuel;
     public Polygon FOV;
