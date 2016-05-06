@@ -38,7 +38,7 @@ import org.json.JSONObject;
 public class GoToBank extends Codelet {
         private MemoryObject bagMO;
 	private MemoryObject selfInfoMO;
-	private MemoryObject legsMO;
+	private MemoryObject legsMO1;
          private MemoryObject innerSenseMO;
 	private int creatureBasicSpeed;
 	private double reachDistance;
@@ -52,7 +52,7 @@ public class GoToBank extends Codelet {
 	public void accessMemoryObjects() {
 		bagMO=this.getInput("BAG");
 		selfInfoMO=this.getInput("INNER");
-		legsMO=this.getOutput("LEGS");
+		legsMO1=this.getOutput("LEGS1");
 	}
 
 	@Override
@@ -72,6 +72,8 @@ public class GoToBank extends Codelet {
 		double selfX=cis.position.getX();
 		double selfY=cis.position.getY();
 
+                //legsMO1.setEvaluation(0.0);
+                
 		Point2D pBank = new Point();
 		pBank.setLocation(bankX, bankY);
 
@@ -95,7 +97,8 @@ public class GoToBank extends Codelet {
 					message.put("Y", (int)bankY);
                                         message.put("SPEED", 0.0);	
 				}
-				legsMO.updateInfo(message.toString());
+				legsMO1.updateInfo(message.toString());
+                                legsMO1.setEvaluation(0.0);
 //				System.out.println(message);
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block

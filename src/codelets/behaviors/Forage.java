@@ -12,14 +12,13 @@ import ws3dproxy.model.Thing;
  * 
  * @author klaus
  * 
- * 
  */
 
 public class Forage extends Codelet {
     
         private MemoryObject knownGreenCrystalsMO;
         private List<Thing> known;
-        private MemoryObject legsMO;
+        private MemoryObject legsMO3;
 
 
 	/**
@@ -32,11 +31,13 @@ public class Forage extends Codelet {
 	@Override
 	public void proc() {
             known = (List<Thing>) knownGreenCrystalsMO.getI();
+            //legsMO3.setEvaluation(0.0);
             if (known.size() == 0) {
 		JSONObject message=new JSONObject();
 			try {
 				message.put("ACTION", "FORAGE");
-				legsMO.updateInfo(message.toString());
+				legsMO3.updateInfo(message.toString());
+                                legsMO3.setEvaluation(5.0);
 			
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
@@ -49,7 +50,7 @@ public class Forage extends Codelet {
 	@Override
 	public void accessMemoryObjects() {
             knownGreenCrystalsMO = this.getInput("KNOWN_GCRYSTALS");
-            legsMO=this.getOutput("LEGS");
+            legsMO3=this.getOutput("LEGS3");
 
 		// TODO Auto-generated method stub
 		

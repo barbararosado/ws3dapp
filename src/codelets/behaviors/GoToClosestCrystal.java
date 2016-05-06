@@ -34,8 +34,8 @@ import ws3dproxy.model.Thing;
 public class GoToClosestCrystal extends Codelet {
         private MemoryObject closestGreenCrystalMO;
 	private MemoryObject selfInfoMO;
-        private MemoryObject bagMO; //?
-	private MemoryObject legsMO;
+        private MemoryObject bagMO;
+	private MemoryObject legsMO5;
 	private int creatureBasicSpeed;
 	private double reachDistance;
 
@@ -48,7 +48,7 @@ public class GoToClosestCrystal extends Codelet {
 	public void accessMemoryObjects() {
 		closestGreenCrystalMO=this.getInput("CLOSEST_GCRYSTAL");
 		selfInfoMO=this.getInput("INNER");
-		legsMO=this.getOutput("LEGS");
+		legsMO5=this.getOutput("LEGS5");
 	}
 
 	@Override
@@ -62,6 +62,7 @@ public class GoToClosestCrystal extends Codelet {
 		String selfInfo= selfInfoMO.getInfo();
                 CreatureInnerSense cis = (CreatureInnerSense) selfInfoMO.getI();
                 //System.out.println("GoToClosestApple: "+appleInfo+" "+selfInfo);
+                //legsMO5.setEvaluation(0.0);
 
 		if(closestGreenCrystal != null)
 		{
@@ -110,13 +111,15 @@ public class GoToClosestCrystal extends Codelet {
 					message.put("Y", (int)gcrystalY);
                                         message.put("SPEED", 0.0);	
 				}
-				legsMO.updateInfo(message.toString());
+				legsMO5.updateInfo(message.toString());
+                                legsMO5.setEvaluation(5.0);
 //				System.out.println(message);
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}else{
+                        legsMO5.setEvaluation(0.0);
 //			JSONObject message=new JSONObject();
 //			try {
 //				message.put("ACTION", "GOTO");

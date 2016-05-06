@@ -32,7 +32,7 @@ import ws3dproxy.model.Thing;
 public class Escape extends Codelet {
         private MemoryObject knownMO;
         private List<Thing> known;
-        private MemoryObject legsMO;
+        private MemoryObject legsMO4;
 
 
 	public Escape(){
@@ -41,12 +41,14 @@ public class Escape extends Codelet {
 
 	@Override
 	public void proc() {
+            //legsMO4.setEvaluation(0.0);
             known = (List<Thing>) knownMO.getI();
             if (known.size() == 0) {
 		JSONObject message=new JSONObject();
 			try {
 				message.put("ACTION", "ESCAPE");
-				legsMO.updateInfo(message.toString());
+				legsMO4.updateInfo(message.toString());
+                                legsMO4.setEvaluation(0.0);
 			
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
@@ -59,7 +61,7 @@ public class Escape extends Codelet {
 	@Override
 	public void accessMemoryObjects() {
             knownMO = this.getInput("KNOWN_APPLES");
-            legsMO=this.getOutput("LEGS");
+            legsMO4=this.getOutput("LEGS4");
 
 		// TODO Auto-generated method stub
 		

@@ -8,12 +8,14 @@
 import br.unicamp.cst.core.entities.Codelet;
 import br.unicamp.cst.core.entities.MemoryObject;
 import br.unicamp.cst.core.entities.Mind;
+import codelets.behaviors.DecideCrystalToGet;
 import codelets.behaviors.EatClosestApple;
 import codelets.behaviors.Escape;
 import codelets.behaviors.Forage;
 import codelets.behaviors.GoToBank;
 import codelets.behaviors.GoToClosestApple;
 import codelets.behaviors.GoToClosestCrystal;
+import codelets.behaviors.LegsDecision;
 import codelets.behaviors.TakeCrystal;
 import codelets.motor.HandsActionCodelet;
 import codelets.motor.LegsActionCodelet;
@@ -31,7 +33,6 @@ import java.util.Collections;
 import java.util.List;
 import memory.CreatureInnerSense;
 import support.MindView;
-import ws3dproxy.model.Bag;
 import ws3dproxy.model.Thing;
 
 /**
@@ -52,6 +53,11 @@ public class AgentMind extends Mind {
                 
                 // Declare Memory Objects
 	        MemoryObject legsMO;
+                MemoryObject legsMO1;
+                MemoryObject legsMO2;
+                MemoryObject legsMO3;
+                MemoryObject legsMO4;
+                MemoryObject legsMO5;
 	        MemoryObject handsMO;
                 MemoryObject visionMO;
                 MemoryObject innerSenseMO;
@@ -65,6 +71,11 @@ public class AgentMind extends Mind {
                 
                 //Initialize Memory Objects
                 legsMO=createMemoryObject("LEGS");
+                legsMO1=createMemoryObject("LEGS1");
+                legsMO2=createMemoryObject("LEGS2");
+                legsMO3=createMemoryObject("LEGS3");
+                legsMO4=createMemoryObject("LEGS4");
+                legsMO5=createMemoryObject("LEGS5");
 		handsMO=createMemoryObject("HANDS");
                 List<Thing> vision_list = Collections.synchronizedList(new ArrayList<Thing>());
 		visionMO=createMemoryObject("VISION",vision_list);
@@ -93,6 +104,11 @@ public class AgentMind extends Mind {
                 mv.addMO(innerSenseMO);
                 mv.addMO(handsMO);
                 mv.addMO(legsMO);
+                mv.addMO(legsMO1);
+                mv.addMO(legsMO2);
+                mv.addMO(legsMO3);
+                mv.addMO(legsMO4);
+                mv.addMO(legsMO5);
                 mv.addMO(hungerMO);
                 mv.addMO(fearMO);
                 mv.addMO(knownGreenCrystalsMO);
@@ -158,10 +174,25 @@ public class AgentMind extends Mind {
                 
 		
 		// Create Behavior Codelets
+                
+                Codelet legsDecision = new LegsDecision();
+                legsDecision.addInput(legsMO1);
+                legsDecision.addInput(legsMO2);
+                legsDecision.addInput(legsMO3);
+                legsDecision.addInput(legsMO4);
+                legsDecision.addInput(legsMO5);
+                legsDecision.addOutput(legsMO);
+                insertCodelet(legsDecision);
+                
+                Codelet decideCrystalToGet = new DecideCrystalToGet();
+                //decideCrystalToGet.addInput();
+                //decideCrystalToGet.addOutput();
+                
+                
 		Codelet goToClosestApple = new GoToClosestApple(creatureBasicSpeed,reachDistance);
 		goToClosestApple.addInput(closestAppleMO);
 		goToClosestApple.addInput(innerSenseMO);
-		goToClosestApple.addOutput(legsMO);
+		goToClosestApple.addOutput(legsMO2);
                 insertCodelet(goToClosestApple);
 		
 		Codelet eatApple=new EatClosestApple(reachDistance);
@@ -174,26 +205,26 @@ public class AgentMind extends Mind {
                 Codelet forage=new Forage();
 		forage.addInput(knownApplesMO);
                 forage.addInput(knownGreenCrystalsMO);
-                forage.addOutput(legsMO);
+                forage.addOutput(legsMO3);
                 insertCodelet(forage);
                 
                 Codelet goToClosestCrystal = new GoToClosestCrystal(creatureBasicSpeed,reachDistance);
 		goToClosestCrystal.addInput(closestGreenCrystalMO);
 		goToClosestCrystal.addInput(innerSenseMO);
                 goToClosestCrystal.addInput(bagMO);
-		goToClosestCrystal.addOutput(legsMO);
+		goToClosestCrystal.addOutput(legsMO5);
                 insertCodelet(goToClosestCrystal);
                 
                 Codelet escape= new Escape();
                 escape.addInput(knownApplesMO);
                 escape.addInput(fearMO);
-                escape.addOutput(legsMO);
+                escape.addOutput(legsMO4);
                 insertCodelet(escape);
                 
                 Codelet goToBank=new GoToBank(creatureBasicSpeed,reachDistance);
                 goToBank.addInput(bagMO);
                 goToBank.addInput(innerSenseMO);
-                goToBank.addOutput(legsMO);
+                goToBank.addOutput(legsMO1);
                 insertCodelet(goToBank);
                 
                 Codelet takeCristal=new TakeCrystal(reachDistance);

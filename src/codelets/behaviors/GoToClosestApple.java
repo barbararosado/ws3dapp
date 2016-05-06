@@ -15,7 +15,7 @@ public class GoToClosestApple extends Codelet {
 
 	private MemoryObject closestAppleMO;
 	private MemoryObject selfInfoMO;
-	private MemoryObject legsMO;
+	private MemoryObject legsMO2;
 	private int creatureBasicSpeed;
 	private double reachDistance;
 
@@ -28,7 +28,7 @@ public class GoToClosestApple extends Codelet {
 	public void accessMemoryObjects() {
 		closestAppleMO=this.getInput("CLOSEST_APPLE");
 		selfInfoMO=this.getInput("INNER");
-		legsMO=this.getOutput("LEGS");
+		legsMO2=this.getOutput("LEGS2");
 	}
 
 	@Override
@@ -42,6 +42,8 @@ public class GoToClosestApple extends Codelet {
 		String selfInfo= selfInfoMO.getInfo();
                 CreatureInnerSense cis = (CreatureInnerSense) selfInfoMO.getI();
                 //System.out.println("GoToClosestApple: "+appleInfo+" "+selfInfo);
+                
+                //legsMO2.setEvaluation(0.0);
 
 		if(closestApple != null)
 		{
@@ -90,13 +92,16 @@ public class GoToClosestApple extends Codelet {
 					message.put("Y", (int)appleY);
                                         message.put("SPEED", 0.0);	
 				}
-				legsMO.updateInfo(message.toString());
+				legsMO2.updateInfo(message.toString());
+                                legsMO2.setI(message.toString());
+                                legsMO2.setEvaluation(10.0);
 //				System.out.println(message);
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}else{
+                        legsMO2.setEvaluation(0.0);
 //			JSONObject message=new JSONObject();
 //			try {
 //				message.put("ACTION", "GOTO");
